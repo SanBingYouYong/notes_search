@@ -2,3 +2,7 @@ build/
 dist/
 test_folder/
 data/
+indexdir/
+index/
+sub_index/
+sub_indices/
