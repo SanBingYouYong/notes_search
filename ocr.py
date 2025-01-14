@@ -1,7 +1,7 @@
 import os
 import subprocess
 from pdf2image import convert_from_path
-import argparse
+import yaml
 from tqdm import tqdm
 
 
@@ -65,6 +65,11 @@ def convert_pdf_in_directory(directory, course_tag: str=None, skip_existing=True
                 continue
             text_file = pdf_to_text(pdf_path, course_tag, tesseract_path, data_path)
             print(f"Output saved to {text_file}")
+
+            # record the path to original pdf file in a yaml file
+            pdf_yaml = os.path.join(output_dir, f"{pdf_name}.yaml")
+            with open(pdf_yaml, "w") as f:
+                yaml.dump({"pdf_path": pdf_path}, f)
         else:
             print(f"Skipping {file} as it is not a PDF file")
 
@@ -72,4 +77,4 @@ def convert_pdf_in_directory(directory, course_tag: str=None, skip_existing=True
 
 
 if __name__ == "__main__":
-    convert_pdf_in_directory("test_folder", "rl")
+    convert_pdf_in_directory("test_2", "RL_Probabilities")

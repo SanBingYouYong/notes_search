@@ -3,11 +3,12 @@ from whoosh.fields import Schema, TEXT, ID
 from whoosh.index import open_dir
 from whoosh.qparser import QueryParser
 import os
+import yaml
 
-
+# TODO: add option for incremental indexing
 def build_index(data_folder, index_folder):
     # Define the schema for the first level
-    schema = Schema(folder=ID(stored=True), content=TEXT)
+    schema = Schema(folder=ID(stored=True), content=TEXT, tag=ID(stored=True))
 
     if not os.path.exists(index_folder):
         print(f"Creating index folder at {index_folder}")
@@ -30,7 +31,7 @@ def build_index(data_folder, index_folder):
                     if os.path.exists(txt_file_path):
                         with open(txt_file_path, "r", encoding="utf-8") as file:
                             content = file.read()
-                            writer.add_document(folder=sub_folder, content=content)
+                            writer.add_document(folder=sub_folder, tag=tag_folder, content=content)
 
     # Commit the changes
     writer.commit()
@@ -82,42 +83,46 @@ def build_sub_index(folder_path, index_folder):
     return ix
 
 
-def search_first_level(query_str, ix):
+def just_search(query_str, ix, retrieves: list):
     with ix.searcher() as searcher:
         query = QueryParser("content", ix.schema).parse(query_str)
         results = searcher.search(query)
-        for result in results:
-            print(result['folder'])
-
-
-def search_second_level(query_str, ix):
-    with ix.searcher() as searcher:
-        query = QueryParser("content", ix.schema).parse(query_str)
-        results = searcher.search(query)
-        for result in results:
-            print(result['file'])
-
+        return [dict(result) for result in results]
 
 def search_from_existing_index(query_str):
     index_folder = "index"
     ix = open_dir(index_folder)
-    search_first_level(query_str, ix)
+    return just_search(query_str, ix, "folder")
 
 def search_from_existing_sub_index(query_str, tag_folder):
     sub_indices_folder = "sub_indices"
     tag_index_folder = os.path.join(sub_indices_folder, tag_folder)
     ix = open_dir(tag_index_folder)
-    search_second_level(query_str, ix)
+    return just_search(query_str, ix, "file")
+
+def retrieve_pdf_path(tag, folder, data_folder="data"):
+    yaml_file_path = os.path.join(data_folder, tag, folder, f"{folder}.yaml")
+    if os.path.exists(yaml_file_path):
+        with open(yaml_file_path, "r", encoding="utf-8") as file:
+            data = yaml.safe_load(file)
+            return data.get("pdf_path", None)
+    return None
+
+def retrieve_img_path(tag, folder, img_base_name, data_folder="data"):
+    img_path = os.path.join(data_folder, tag, folder, f"{img_base_name}.png")
+    if os.path.exists(img_path):
+        return img_path
+    return None
 
 
 if __name__ == "__main__":
-    # # Build the first level index
-    # data_folder = "data"
-    # index_folder = "index"
-    # ix = build_index(data_folder, index_folder)
+    # Build the first level index
+    data_folder = "data"
+    index_folder = "index"
+    ix = build_index(data_folder, index_folder)
+    # Build the second level indices
+    build_all_sub_indices(data_folder)
 
-    # # Build the second level indices
-    # build_all_sub_indices(data_folder)
-
-    search_from_existing_index("machine learning")
-    search_from_existing_sub_index("Imperial COllege London", "rl/Lab 1")
+    results = search_from_existing_index("machine learning")
+    print(results)
+    # search_from_existing_sub_index("Imperial COllege London", "rl/Lab 1")

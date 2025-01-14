@@ -6,3 +6,5 @@ indexdir/
 index/
 sub_index/
 sub_indices/
+test_2/
+__pycache__/
