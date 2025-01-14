@@ -116,15 +116,15 @@ def retrieve_img_path(tag_folder, img_base_name, data_folder="data"):
 
 
 if __name__ == "__main__":
-    # # Build the first level index
-    # data_folder = "data"
-    # index_folder = "index"
-    # ix = build_index(data_folder, index_folder)
-    # # Build the second level indices
-    # build_all_sub_indices(data_folder)
+    # Build the first level index
+    data_folder = "data"
+    index_folder = "index"
+    ix = build_index(data_folder, index_folder)
+    # Build the second level indices
+    build_all_sub_indices(data_folder)
 
     # results = search_from_existing_index("machine learning")
     # print(results)
-    results = search_from_existing_sub_index("Imperial COllege London", "RL_Probabilities/RL 1.1 - Introduction")
-    print(results)
-    print(retrieve_img_path("RL_Probabilities", "RL 1.1 - Introduction", "RL 1.1 - Introduction_p14"))
+    # results = search_from_existing_sub_index("Imperial COllege London", "RL_Probabilities/RL 1.1 - Introduction")
+    # print(results)
+    # print(retrieve_img_path("RL_Probabilities", "RL 1.1 - Introduction", "RL 1.1 - Introduction_p14"))
