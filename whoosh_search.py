@@ -108,21 +108,23 @@ def retrieve_pdf_path(tag, folder, data_folder="data"):
             return data.get("pdf_path", None)
     return None
 
-def retrieve_img_path(tag, folder, img_base_name, data_folder="data"):
-    img_path = os.path.join(data_folder, tag, folder, f"{img_base_name}.png")
+def retrieve_img_path(tag_folder, img_base_name, data_folder="data"):
+    img_path = os.path.join(data_folder, tag_folder, f"{img_base_name}.png")
     if os.path.exists(img_path):
         return img_path
     return None
 
 
 if __name__ == "__main__":
-    # Build the first level index
-    data_folder = "data"
-    index_folder = "index"
-    ix = build_index(data_folder, index_folder)
-    # Build the second level indices
-    build_all_sub_indices(data_folder)
+    # # Build the first level index
+    # data_folder = "data"
+    # index_folder = "index"
+    # ix = build_index(data_folder, index_folder)
+    # # Build the second level indices
+    # build_all_sub_indices(data_folder)
 
-    results = search_from_existing_index("machine learning")
+    # results = search_from_existing_index("machine learning")
+    # print(results)
+    results = search_from_existing_sub_index("Imperial COllege London", "RL_Probabilities/RL 1.1 - Introduction")
     print(results)
-    # search_from_existing_sub_index("Imperial COllege London", "rl/Lab 1")
+    print(retrieve_img_path("RL_Probabilities", "RL 1.1 - Introduction", "RL 1.1 - Introduction_p14"))

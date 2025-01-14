@@ -18,3 +18,4 @@ if page_params:
         pdf_path = base64.b64decode(text).decode()
         st.sidebar.markdown(f"`{pdf_path}`")
         display_pdf(pdf_path)
+# TODO: maybe support viewing all PDF in local db
