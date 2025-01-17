@@ -7,6 +7,8 @@ PDF and OCR based notes searching. Index your notes and search for keywords.
 
 ## Quick Start
 - `pip install -r requirements.txt`
+- Install tesseract per instruction on [this](https://github.com/SanBingYouYong/pdf2txt) (TODO: make UI to supply local PDF lib path)
+    - modify `TESSERACT_PATH` in `ocr.py` for now
 - Prepare 'database': 
     - TODO: make UI
     - For now: 
@@ -20,6 +22,7 @@ PDF and OCR based notes searching. Index your notes and search for keywords.
 ![pdf](pdf.png)
 
 ## TO-DO:
+- add settings page to specify location of PDF reading library
 - add a page to allow adding notes to index through UI
 - fuzzy search
 - multi-select tags to search in
