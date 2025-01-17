@@ -4,9 +4,11 @@ from pdf2image import convert_from_path
 import yaml
 from tqdm import tqdm
 
+from config import get_config_value
 
-TESSERACT_PATH = "C:\\ZSY\\Applications\\tesseract\\tesseract.exe"
-DATA_PATH = "data"
+
+TESSERACT_PATH = get_config_value("tesseract_path")
+DATA_PATH = get_config_value("data_path")
 
 def _format_page_index(i, total):
     total_digits = len(str(total))

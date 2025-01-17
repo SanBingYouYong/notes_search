@@ -1,0 +1,15 @@
+languages:
+  en:
+    search_title: "Notes Search and Visualization"
+    search_box: "Enter search query:"
+    search_results: "Search results:"
+    pdf_not_found: "No PDF path found"
+    image_search: "🖼️ Search Images"
+    view_pdf: "📄 View PDF"
+  中文:
+    search_title: "笔记搜索与可视化"
+    search_box: "输入搜索关键词:"
+    search_results: "搜索结果:"
+    pdf_not_found: "未找到 PDF 路径"
+    image_search: "🖼️ 搜索图片"
+    view_pdf: "📄 查看 PDF"

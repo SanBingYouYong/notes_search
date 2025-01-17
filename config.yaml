@@ -1,0 +1,8 @@
+data_path: data
+lang: en
+lang_file: lang.yaml
+platform: Windows
+supported_langs:
+- en
+- 中文
+tesseract_path: C:\ZSY\Applications\tesseract\tesseract.exe
